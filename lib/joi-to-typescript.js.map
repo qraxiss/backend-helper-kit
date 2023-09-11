@@ -1,0 +1,1 @@
+{"version":3,"file":"joi-to-typescript.js","sourceRoot":"","sources":["../joi-to-typescript.ts"],"names":[],"mappings":";;;AAAA,yDAAwD;AAExD,SAAgB,OAAO;IACnB,IAAA,wCAAoB,EAAC;QACjB,eAAe,EAAE,4BAA4B;QAC7C,mBAAmB,EAAE,uBAAuB;KAC/C,CAAC,CAAA;IAEF,IAAA,wCAAoB,EAAC;QACjB,eAAe,EAAE,2BAA2B;QAC5C,mBAAmB,EAAE,sBAAsB;KAC9C,CAAC,CAAA;AACN,CAAC;AAVD,0BAUC"}
