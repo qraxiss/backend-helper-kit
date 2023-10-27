@@ -1,6 +1,6 @@
 import JWT from 'jsonwebtoken'
 
-import { ForbiddenError } from '../error/errors'
+import { ForbiddenError } from './error/errors'
 
 export function decode(token: string, key: string) {
     try {

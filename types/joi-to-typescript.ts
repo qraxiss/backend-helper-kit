@@ -1,13 +1,12 @@
 import { convertFromDirectory } from 'joi-to-typescript'
 
-export function convert() {
-    convertFromDirectory({
-        schemaDirectory: './logic/validators/returns',
-        typeOutputDirectory: './logic/types/returns'
-    })
+type directories = {
+    schemaDirectory: string
+    typeOutputDirectory: string
+}[]
 
-    convertFromDirectory({
-        schemaDirectory: './logic/validators/params',
-        typeOutputDirectory: './logic/types/params'
+export function convert(directories: directories) {
+    directories.forEach((directory) => {
+        convertFromDirectory(directory)
     })
 }
