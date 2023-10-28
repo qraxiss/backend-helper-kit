@@ -12,7 +12,7 @@ interface returnType {
     status?: string | number
 }
 
-export function formatter(data: any, message: string = '', status: string = 'success'): returnType {
+export function returnFormatter(data: any, message: string = '', status: string = 'success'): returnType {
     if (message === '') {
         return {
             result: data,
