@@ -28,3 +28,25 @@ export function formatter(model: any) {
         return descriptor
     }
 }
+
+export function wsFormatter(websockets: WebSocket[]) {
+    return function (target: any, name: string, descriptor: any) {
+        const originalFunction = descriptor.value
+
+        descriptor.value = async function (ws: WebSocket, req: Request) {
+            await originalFunction.call(this, ws, req)
+
+            if (ws) {
+                websockets.push(ws)
+                ws.send(
+                    JSON.stringify(
+                        returnFormatter({
+                            status: 'connected'
+                        })
+                    )
+                )
+            }
+        }
+        return descriptor
+    }
+}
