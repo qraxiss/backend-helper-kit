@@ -24,3 +24,22 @@ export function status500(err: BaseError | Error | AxiosError, req: any, res: an
 
     next()
 }
+
+export function ws500(err: BaseError | Error | AxiosError, ws: any, req: any) {
+    if (err instanceof AxiosError) {
+        ws.send(
+            JSON.stringify({
+                api_error: err.response?.data || err.response?.statusText || err.message
+            })
+        )
+        return
+    }
+
+    const json = returnFormatter(err, 'Something went wrong', 'failed')
+
+    if (!json.error!.status) {
+        json.error!.status = 500
+    }
+
+    ws.send(JSON.stringify(json))
+}
