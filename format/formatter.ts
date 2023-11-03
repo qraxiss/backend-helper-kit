@@ -29,15 +29,15 @@ export function formatter(model: any) {
     }
 }
 
-export function wsFormatter(websockets: Map<String, WebSocket>) {
+export function wsFormatter(websockets: any) {
     return function (target: any, name: string, descriptor: any) {
         const originalFunction = descriptor.value
 
         descriptor.value = async function (ws: WebSocket, req: Request) {
             await originalFunction.call(this, ws, req)
-            const id = (req as any).session!.user!.id
+            const id = (req as any).session!.user!.id!
             if (ws) {
-                websockets.set(id, ws)
+                websockets[id] = ws
                 ws.send(
                     JSON.stringify(
                         returnFormatter({
