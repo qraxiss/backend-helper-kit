@@ -21,48 +21,50 @@ function getModelName(filename: string): string {
         ?.replace('.ts', '') as string
 }
 
+type inputType = { result: any; name?: string; text?: string }
+
 export class ErrorHelper {
     public modelName: string
 
     constructor(modelName: string) {
         var name = modelName
-        this.modelName = getModelName(name!)
+        this.modelName = getModelName(name)
     }
 
-    notFound(name?: string, text?: string) {
-        return new NotFoundError(text || `${name || this.modelName} not found!`)
+    notFound(text: string) {
+        return new NotFoundError(text)
     }
 
-    createError(result: any, name?: string, text?: string) {
-        if (!result) {
-            throw new CreateError(text || `Error creating ${name || this.modelName}`)
+    createError(data: inputType) {
+        if (!data.result) {
+            throw new CreateError(data.text || `Error creating ${data.name || this.modelName}`)
         }
     }
 
     @acknowledged()
-    updateError(result: any, name?: string) {
-        if (result.matchedCount === 0) {
-            throw this.notFound(name || this.modelName)
+    updateError(data: inputType) {
+        if (data.result.matchedCount === 0) {
+            throw this.notFound(data.text || data.name || this.modelName)
         }
     }
 
-    getError(result: any, name?: string) {
-        if (!result) {
-            throw this.notFound(name || this.modelName)
-        }
-    }
-
-    @acknowledged()
-    getAllError(result: any, name?: string) {
-        if (result.length === 0) {
-            throw this.notFound(name || this.modelName)
+    getError(data: inputType) {
+        if (!data.result) {
+            throw this.notFound(data.text || data.name || this.modelName)
         }
     }
 
     @acknowledged()
-    deleteError(result: any, name?: string) {
-        if (result.deletedCount === 0) {
-            throw this.notFound(name || this.modelName)
+    getAllError(data: inputType) {
+        if (data.result.length === 0) {
+            throw this.notFound(data.text || data.name || this.modelName)
+        }
+    }
+
+    @acknowledged()
+    deleteError(data: inputType) {
+        if (data.result.deletedCount === 0) {
+            throw this.notFound(data.text || data.name || this.modelName)
         }
     }
 }
