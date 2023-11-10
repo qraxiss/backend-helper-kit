@@ -24,18 +24,18 @@ function getModelName(filename: string): string {
 export class ErrorHelper {
     public modelName: string
 
-    constructor(modelName: string, filename?: string | undefined) {
-        var name = modelName || filename
+    constructor(modelName: string) {
+        var name = modelName
         this.modelName = getModelName(name!)
     }
 
-    notFound(name: string) {
-        return new NotFoundError(`${name} not found!`)
+    notFound(name?: string, text?: string) {
+        return new NotFoundError(text || `${name || this.modelName} not found!`)
     }
 
-    createError(result: any, name?: string) {
+    createError(result: any, name?: string, text?: string) {
         if (!result) {
-            throw new CreateError(`Error creating ${name || this.modelName}`)
+            throw new CreateError(text || `Error creating ${name || this.modelName}`)
         }
     }
 
