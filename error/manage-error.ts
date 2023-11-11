@@ -56,6 +56,8 @@ export class ErrorHelper {
 
     @acknowledged()
     getAllError(data: inputType) {
+        this.getError(data)
+
         if (data.result.length === 0) {
             throw this.notFound(data.text || data.name || this.modelName)
         }
