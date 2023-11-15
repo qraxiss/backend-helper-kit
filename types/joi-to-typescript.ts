@@ -5,8 +5,10 @@ type directories = {
     typeOutputDirectory: string
 }[]
 
-export function convert(directories: directories) {
-    directories.forEach((directory) => {
-        convertFromDirectory(directory)
-    })
+export async function convert(directories: directories) {
+    return await Promise.all(
+        directories.map(async (directory) => {
+            return await convertFromDirectory(directory)
+        })
+    )
 }
